@@ -29,15 +29,15 @@ public class MaximumPathQualityofaGraph_2065 {
 
                 if(nextNode == 0 && (maxQuality < curQuality + (isVisited ? 0 : values[nextNode]))){
                     maxQuality = curQuality + (isVisited ? 0 : values[nextNode]);
-                    System.out.println(maxQuality + " " + (curQuality + curNode));
                 }
 
-                if(!isVisited) visited.add(nextNode);
+                List<Integer> newVisited = new ArrayList<>(visited);
+                if(!isVisited) newVisited.add(nextNode);
                 List<Integer> nextQueueItem = new ArrayList<>();
                 nextQueueItem.add(curQuality + (isVisited ? 0 : values[nextNode]));
                 nextQueueItem.add(curTime + nextTime);
                 nextQueueItem.add(nextNode);
-                nextQueueItem.addAll(visited);
+                nextQueueItem.addAll(newVisited);
                 queue.offer(nextQueueItem);
             }
         }
@@ -50,9 +50,7 @@ public class MaximumPathQualityofaGraph_2065 {
 //        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{5,10,15,20}, new int[][]{{0,1,10},{1,2,10},{0,3,10}}, 30);
 //        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{1,2,3,4}, new int[][]{{0,1,10},{1,2,11},{1,3,13}}, 50);
 //        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{0,1,2}, new int[][]{{1,2,10}}, 10);
-
-        //Expected 61 but output is 50
-        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{8,16,26,11,6}, new int[][]{{1,2,36},{0,3,75},{2,3,10},{0,2,18},{0,4,11},{2,4,19},{3,4,41},{0,1,10},{1,3,48}}, 76);
-        System.out.println(maxQuality);
+//        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{8,16,26,11,6}, new int[][]{{1,2,36},{0,3,75},{2,3,10},{0,2,18},{0,4,11},{2,4,19},{3,4,41},{0,1,10},{1,3,48}}, 76);
+//        System.out.println(maxQuality);
     }
 }
