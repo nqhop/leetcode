@@ -47,20 +47,23 @@ public class MaximumPathQualityofaGraph_2065 {
 
 
     private int[] values;
-    private List<int[]>[] graph;
+    private List<List<int[]>> graph;
     private int maxTime;
     private int maxQuality = 0;
     public int maximalPathQuality2(int[] values, int[][] edges, int maxTime) {
         int n = values.length;
         this.values = values;
         this.maxTime = maxTime;
-        graph = new ArrayList[n];
+        graph = new ArrayList<>();
 
-        Arrays.fill(graph, new ArrayList<>());
+        for(int i = 0; i < n; i++){
+            graph.add(new ArrayList<>());
+        }
+
         for(int[] edge : edges){
             int from = edge[0], to = edge[1], time = edge[2];
-            graph[from].add(new int[]{to, time});
-            graph[to].add(new int[]{from, time});
+            graph.get(from).add(new int[]{to, time});
+            graph.get(to).add(new int[]{from, time});
         }
 
         int[] visited = new int[n];
@@ -75,7 +78,7 @@ public class MaximumPathQualityofaGraph_2065 {
         visited[node]++;
         if(node == 0) maxQuality = Math.max(maxQuality, quality);
 
-        for(int[] neighbor : graph[node]){
+        for(int[] neighbor : graph.get(node)){
             int nextNode = neighbor[0], nextTime = neighbor[1];
             dfs(nextNode,time + nextTime, quality, visited);
         }
@@ -91,10 +94,14 @@ public class MaximumPathQualityofaGraph_2065 {
 //        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{5,10,15,20}, new int[][]{{0,1,10},{1,2,10},{0,3,10}}, 30);
 //        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{1,2,3,4}, new int[][]{{0,1,10},{1,2,11},{1,3,13}}, 50);
 //        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{0,1,2}, new int[][]{{1,2,10}}, 10);
-//        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{8,16,26,11,6}, new int[][]{{1,2,36},{0,3,75},{2,3,10},{0,2,18},{0,4,11},{2,4,19},{3,4,41},{0,1,10},{1,3,48}}, 76);
-//        System.out.println(maxQuality);
+        int maxQuality =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{8,16,26,11,6}, new int[][]{{1,2,36},{0,3,75},{2,3,10},{0,2,18},{0,4,11},{2,4,19},{3,4,41},{0,1,10},{1,3,48}}, 76);
+        System.out.println(maxQuality);
 
-        int maxQuality2 =  maximumPathQualityofaGraph.maximalPathQuality2(new int[]{0,32,10,43}, new int[][]{{0,1,10},{1,2,15},{0,3,10}}, 49);
+//        int maxQuality2 =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{0,32,10,43}, new int[][]{{0,1,10},{1,2,15},{0,3,10}}, 49);
+//        int maxQuality2 =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{5,10,15,20}, new int[][]{{0,1,10},{1,2,10},{0,3,10}}, 30);
+//        int maxQuality2 =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{1,2,3,4}, new int[][]{{0,1,10},{1,2,11},{1,3,13}}, 50);
+//        int maxQuality2 =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{0,1,2}, new int[][]{{1,2,10}}, 10);
+        int maxQuality2 =  maximumPathQualityofaGraph.maximalPathQuality(new int[]{8,16,26,11,6}, new int[][]{{1,2,36},{0,3,75},{2,3,10},{0,2,18},{0,4,11},{2,4,19},{3,4,41},{0,1,10},{1,3,48}}, 76);
         System.out.println(maxQuality2);
     }
 }
