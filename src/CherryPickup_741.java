@@ -118,6 +118,58 @@ public class CherryPickup_741 {
         return col + 1;
     }
 
+
+
+    Integer[][][] dp;
+    private int cherryPickup3(int[][] grid) {
+        this.grid = grid;
+        this.n = grid.length;
+        this.dp = new Integer[n][n][n];
+        for(int[] row : grid){
+            System.out.println(Arrays.toString(row));
+        }
+
+        int result = Math.max(0, dfs3(0, 0, 0));
+                printDP(dp);
+        return result;
+    }
+
+    private int dfs3(int r1, int c1, int r2){
+        // r1 + c1 = r2 + c2
+        int c2 = r1 + c1 - r2;
+        if(r1 == n || c1 == n || r2 == n || c2 == n || grid[r1][c1] == -1 || grid[r2][c2] == -1) return Integer.MIN_VALUE;
+
+        if(r1 == n - 1 && c1 == n - 1) return grid[r1][c1];
+
+        if(dp[r1][c1][c2] != null) return dp[r1][c1][c2];
+
+        int cherries = grid[r1][c1];
+        if(r1 != r2 || c1 != c2) cherries += grid[r2][c2];
+
+        int max = Math.max(
+                Math.max(dfs3(r1 + 1, c1, r2 + 1), dfs3(r1, c1 + 1, r2)),
+                Math.max(dfs3(r1 + 1, c1, r2), dfs3(r1, c1 + 1, r2 + 1))
+        );
+
+        cherries += max;
+        dp[r1][c1][c2] = cherries;
+        return cherries;
+    }
+
+    public void printDP(Integer[][][] dp) {
+        for (int i = 0; i < dp.length; i++) {
+            System.out.println("Layer " + i + ":");
+            for (int j = 0; j < dp[i].length; j++) {
+                for (int k = 0; k < dp[i][j].length; k++) {
+                    System.out.print((dp[i][j][k] != null ? dp[i][j][k] : "null") + " ");
+                }
+                System.out.println();
+            }
+            System.out.println(); // Separate layers
+        }
+    }
+
+
     public static void main(String[] args) {
         CherryPickup_741 cp = new CherryPickup_741();
 //        System.out.println(cp.cherryPickup(new int[][]{{0,1,-1},{1,0,-1},{1,1,1}}));
@@ -126,8 +178,9 @@ public class CherryPickup_741 {
 //        System.out.println(cp.cherryPickup2(new int[][]{{1,1,1,1,0,0,0},{0,0,0,1,0,0,0},{0,0,0,1,0,0,1},{1,0,0,1,0,0,0},{0,0,0,1,0,0,0},{0,0,0,1,0,0,0},{0,0,0,1,1,1,1}}));
 //        System.out.println(cp.cherryPickup2(new int[][]{{1, 1, 0, 0},{0, 1, 0, 1},{1, 1, 0, 0},{0, 1, 1, 1}}));
 //        System.out.println(cp.cherryPickup2(new int[][]{{0,0},{-1,1}}));
-        System.out.println(cp.cherryPickup2(new int[][]{{1,1,1,1,-1,-1,-1,1,0,0},{1,0,0,0,1,0,0,0,1,0},{0,0,1,1,1,1,0,1,1,1},{1,1,0,1,1,1,0,-1,1,1},{0,0,0,0,1,-1,0,0,1,-1},{1,0,1,1,1,0,0,-1,1,0},{1,1,0,1,0,0,1,0,1,-1},{1,-1,0,1,0,0,0,1,-1,1},{1,0,-1,0,-1,0,0,1,0,0},{0,0,-1,0,1,0,1,0,0,1}}));
+//        System.out.println(cp.cherryPickup2(new int[][]{{1,1,1,1,-1,-1,-1,1,0,0},{1,0,0,0,1,0,0,0,1,0},{0,0,1,1,1,1,0,1,1,1},{1,1,0,1,1,1,0,-1,1,1},{0,0,0,0,1,-1,0,0,1,-1},{1,0,1,1,1,0,0,-1,1,0},{1,1,0,1,0,0,1,0,1,-1},{1,-1,0,1,0,0,0,1,-1,1},{1,0,-1,0,-1,0,0,1,0,0},{0,0,-1,0,1,0,1,0,0,1}}));
 
+        System.out.println(cp.cherryPickup3(new int[][]{{1, 1, 0, 0},{0, 1, 0, 1},{1, 1, 0, 0},{0, 1, 1, 1}}));
     }
 }
 
