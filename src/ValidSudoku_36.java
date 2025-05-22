@@ -10,8 +10,12 @@ public class ValidSudoku_36 {
                     return false;
             }
 
+//        for(int i = 0 ; i < 9; i++){
+//            if(!checkDigitHorizontal(i, board) || !checkDigitsVertical(i, board)) return false;
+//        }
+//
         for(int i = 0 ; i < 9; i++){
-            if(!checkDigitHorizontal(i, board) || !checkDigitsVertical(i, board)) return false;
+            if(!checkDigitHorizontalandVertical(i, board)) return false;
         }
 
         return true;
@@ -43,6 +47,18 @@ public class ValidSudoku_36 {
         for(int col = 0; col < 9; col++) {
             if(board[row][col] != '.' && digits.contains((Character) board[row][col])) return false;
             if(board[row][col] != '.') digits.add((Character) board[row][col]);
+        }
+        return true;
+    }
+
+    public boolean checkDigitHorizontalandVertical(int i, char[][] board) {
+        List<Character> digitHorizontal = new ArrayList<>();
+        List<Character> digitVertical = new ArrayList<>();
+        for(int j = 0; j < 9; j++) {
+            if(board[i][j] != '.' && digitHorizontal.contains((Character) board[i][j])) return false;
+            if(board[j][i] != '.' && digitVertical.contains((Character) board[j][i])) return false;
+            if(board[i][j] != '.') digitHorizontal.add((Character) board[i][j]);
+            if(board[j][i] != '.') digitVertical.add((Character) board[j][i]);
         }
         return true;
     }
