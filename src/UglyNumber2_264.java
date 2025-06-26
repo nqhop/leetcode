@@ -1,8 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Math.pow;
-
 public class UglyNumber2_264 {
     public int nthUglyNumber(int n) {
         int[] ugly = new int[n];
