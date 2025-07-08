@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class MaximumBinaryStringafterChange_1702 {
     public String maximumBinaryString(String binary) {
         binary = binary.replaceAll("00", "10");
@@ -16,13 +18,25 @@ public class MaximumBinaryStringafterChange_1702 {
         return res;
     }
 
+    public String maximumBinaryString2(String binary) {
+        int k = binary.indexOf('0');
+        if(k == -1) return binary;
+        for(int i = k + 1; i < binary.length(); i++){
+            if(binary.charAt(i) == '0') k++;
+        }
 
+        char[] ans = binary.toCharArray();
+        Arrays.fill(ans, '1');
+        ans[k] = '0';
+        return String.valueOf(ans);
+    }
 
 
     public static void main(String[] args) {
 //        System.out.println(new MaximumBinaryStringafterChange_1702().maximumBinaryString("000110"));
 //        System.out.println(new MaximumBinaryStringafterChange_1702().maximumBinaryString("11"));
         System.out.println(new MaximumBinaryStringafterChange_1702().maximumBinaryString("01111001100000110010"));
+        System.out.println(new MaximumBinaryStringafterChange_1702().maximumBinaryString2("01111001100000110010"));
     }
 
 }
