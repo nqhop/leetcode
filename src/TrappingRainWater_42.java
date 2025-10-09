@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class TrappingRainWater_42 {
     public int trap(int[] height) {
         int total = 0;
@@ -33,10 +35,65 @@ public class TrappingRainWater_42 {
 
 
     // better performance
+    public int trap2(int[] height) {
+        int max = -1, maxIndex = 0, total = 0;
+        for(int i = 0; i< height.length; i++){
+            if(height[i] > max){
+                max = height[i];
+                maxIndex = i;
+            }
+        }
+
+        int maxLeft = -1;
+        for(int i = 0; i < maxIndex; i++){
+            if(height[i] > maxLeft){
+                maxLeft = height[i];
+            } else if (maxLeft > height[i]) {
+                total += maxLeft - height[i];
+            }
+        }
+
+        int maxRight = 0;
+        for(int i = height.length - 1; i > maxIndex; i--){
+            if(height[i] > maxRight)
+                maxRight = height[i];
+            else if (maxRight > height[i])
+                total += maxRight - height[i];
+        }
+
+        return total;
+    }
+
+    public static int[] ramdomArray(int n){
+        Random rand = new Random();
+        int[] radomArr = new int[n];
+        for(int i = 0; i < n; i++){
+            radomArr[i] = rand.nextInt(400);
+        }
+        return radomArr;
+    }
 
 
     public static void main(String[] args) {
-//        System.out.println(new TrappingRainWater_42().trap(new int[]{4,2,0,3,2,5}));
-        System.out.println(new TrappingRainWater_42().trap(new int[]{0, 1, 3, 5}));
+        int[] arr = ramdomArray(5000);
+
+        long startTime = System.nanoTime();
+        System.out.println(new TrappingRainWater_42().trap(arr));
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+
+        System.out.println("Execution time: " + duration + " nanoseconds");
+        System.out.println("Execution time: " + (duration / 1_000_000.0) + " milliseconds");
+
+
+        long startTime2 = System.nanoTime();
+        System.out.println(new TrappingRainWater_42().trap2(arr));
+        long endTime2 = System.nanoTime();
+        long duration2 = endTime2 - startTime2;
+
+        System.out.println("Execution time: " + duration2 + " nanoseconds");
+        System.out.println("Execution time: " + (duration2 / 1_000_000.0) + " milliseconds");
+
+
     }
 }
