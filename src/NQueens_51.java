@@ -38,6 +38,34 @@ public class NQueens_51 {
         return result;
     }
 
+    public List<List<String>> solveNQueens2(int n) {
+        List<List<String>> result = new ArrayList<>();
+        List<char[]> matrix = IntStream.range(0, n)
+                .mapToObj(i -> {
+                    char[] row = new char[n];
+                    Arrays.fill(row, '.');
+                    return row;
+                })
+                .collect(Collectors.toList());
+        findQueensMatrix(matrix, 0, 0, 0, result);
+        return result;
+    }
+
+    private void findQueensMatrix(List<char[]> matrix, int i, int j, int queen, List<List<String>> result){
+        if(queen == matrix.size()){
+            result.add(matrix.stream()
+                    .map(String::new)
+                    .toList());
+        }
+        if(i >= matrix.size() || j >= matrix.size()) return;
+        if(checkQueen(matrix, i, j)) {
+            matrix.get(i)[j] = 'Q';
+            findQueensMatrix(matrix, i + 1, 0, queen + 1, result);
+            matrix.get(i)[j] = '.';
+        }
+        findQueensMatrix(matrix, i, j + 1, queen, result);
+    }
+
     private static void print2DArray(List<char[]> matrix){
         for(char[] c : matrix){
             System.out.println(c);
@@ -74,6 +102,6 @@ public class NQueens_51 {
     }
 
     public static void main(String[] args) {
-        new NQueens_51().solveNQueens(5);
+        new NQueens_51().solveNQueens2(4);
     }
 }
